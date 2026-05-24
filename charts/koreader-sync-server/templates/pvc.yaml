@@ -1,0 +1,21 @@
+{{- if and .Values.persistence.enabled (not .Values.persistence.dataRedis.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "koreader-sync-server.dataRedisClaimName" . }}
+  labels:
+    {{- include "koreader-sync-server.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    {{- toYaml .Values.persistence.dataRedis.accessModes | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.dataRedis.size }}
+  {{- with .Values.persistence.dataRedis.storageClass }}
+  {{- if eq . "-" }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: {{ . | quote }}
+  {{- end }}
+  {{- end }}
+{{- end }}

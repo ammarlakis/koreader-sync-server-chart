@@ -1,0 +1,129 @@
+# -- Override the chart name used in generated resource names.
+nameOverride: ""
+
+# -- Override the full generated resource name.
+fullnameOverride: ""
+
+# -- Number of KOReader sync server replicas to run.
+replicaCount: 1
+
+image:
+  # -- KOReader sync server image repository.
+  repository: koreader/kosync
+  # -- KOReader sync server image tag.
+  tag: "v2.1.1"
+  # -- KOReader sync server image digest. When set, the rendered image uses tag@digest. Override or clear this when overriding image.tag.
+  digest: "sha256:bb3f13615365703315a43b9059f65e71e876440f867e23a42bf27f2fa18264e1"
+  # -- Kubernetes image pull policy.
+  pullPolicy: IfNotPresent
+
+# -- Image pull secrets for private registries.
+imagePullSecrets: []
+
+service:
+  # -- Kubernetes Service type.
+  type: ClusterIP
+  # -- HTTP service and container port.
+  httpPort: 17200
+  # -- HTTPS service and container port.
+  httpsPort: 7200
+
+# -- Environment variables rendered as literal values.
+env:
+  ENABLE_USER_REGISTRATION: "true"
+
+# -- Additional environment variables. Supports value and valueFrom entries.
+extraEnv: []
+
+persistence:
+  # -- Persist the Redis data directory.
+  enabled: true
+  dataRedis:
+    # -- Existing PVC name to use instead of creating one.
+    existingClaim: ""
+    # -- PVC size for Redis data.
+    size: 1Gi
+    # -- StorageClass for the PVC. Set to "-" to request an empty storageClassName.
+    storageClass: ""
+    # -- PVC access modes.
+    accessModes:
+      - ReadWriteOnce
+
+# -- Additional volumes. Each item should contain name and volume keys.
+extraVolumes: []
+
+# -- Additional volume mounts.
+extraVolumeMounts: []
+
+# -- Pod annotations.
+podAnnotations: {}
+
+# -- Additional pod labels.
+podLabels: {}
+
+# -- Pod security context.
+podSecurityContext: {}
+
+# -- Container security context.
+securityContext: {}
+
+# -- Node selector for scheduling.
+nodeSelector: {}
+
+# -- Pod tolerations.
+tolerations: []
+
+# -- Pod affinity rules.
+affinity: {}
+
+# -- Pod topology spread constraints.
+topologySpreadConstraints: []
+
+# -- RuntimeClass name for the pod.
+runtimeClassName: ""
+
+# -- Pod priority class name.
+priorityClassName: ""
+
+# -- Container resource requests and limits.
+resources: {}
+
+livenessProbe:
+  # -- Enable the liveness probe.
+  enabled: true
+  # -- HTTP path for the liveness probe.
+  path: /healthcheck
+  # -- Initial liveness probe delay in seconds.
+  initialDelaySeconds: 15
+  # -- Liveness probe period in seconds.
+  periodSeconds: 20
+  # -- Liveness probe timeout in seconds.
+  timeoutSeconds: 2
+
+readinessProbe:
+  # -- Enable the readiness probe.
+  enabled: true
+  # -- HTTP path for the readiness probe.
+  path: /healthcheck
+  # -- Initial readiness probe delay in seconds.
+  initialDelaySeconds: 5
+  # -- Readiness probe period in seconds.
+  periodSeconds: 10
+  # -- Readiness probe timeout in seconds.
+  timeoutSeconds: 2
+
+ingress:
+  # -- Enable an Ingress resource.
+  enabled: false
+  # -- Ingress class name. If empty, the cluster default is used.
+  className: ""
+  # -- Ingress annotations.
+  annotations: {}
+  # -- Ingress host rules.
+  hosts:
+    - host: koreader-sync-server.local
+      paths:
+        - path: /
+          pathType: Prefix
+  # -- Ingress TLS configuration.
+  tls: []

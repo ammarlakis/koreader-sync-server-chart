@@ -1,0 +1,23 @@
+apiVersion: v2
+name: koreader-sync-server
+description: Helm chart for deploying the KOReader sync server
+type: application
+version: 0.1.0
+appVersion: "v2.1.1"
+home: https://github.com/ammarlakis/koreader-sync-server-chart
+maintainers:
+  - name: Ammar Lakis
+    url: https://github.com/ammarlakis
+sources:
+  - https://github.com/koreader/koreader-sync-server
+  - https://hub.docker.com/r/koreader/kosync
+keywords:
+  - ebook
+  - koreader
+  - sync
+  - reader
+annotations:
+  artifacthub.io/category: storage
+  artifacthub.io/images: |
+    - name: koreader-sync-server
+      image: koreader/kosync:v2.1.1@sha256:bb3f13615365703315a43b9059f65e71e876440f867e23a42bf27f2fa18264e1
