@@ -34,9 +34,7 @@ app.kubernetes.io/instance: {{ .Release.Name | quote }}
 
 {{- define "koreader-sync-server.image" -}}
 {{- $tag := default .Chart.AppVersion .Values.image.tag -}}
-{{- if .Values.image.digest -}}
-{{- printf "%s@%s" .Values.image.repository .Values.image.digest -}}
-{{- else if hasPrefix "@" $tag -}}
+{{- if hasPrefix "@" $tag -}}
 {{- printf "%s%s" .Values.image.repository $tag -}}
 {{- else -}}
 {{- printf "%s:%s" .Values.image.repository $tag -}}
