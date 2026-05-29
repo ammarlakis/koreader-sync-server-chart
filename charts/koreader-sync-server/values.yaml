@@ -12,7 +12,7 @@ image:
   repository: koreader/kosync
   # -- KOReader sync server image tag.
   tag: "v2.1.1"
-  # -- KOReader sync server image digest. When set, the rendered image uses tag@digest. Override or clear this when overriding image.tag.
+  # -- KOReader sync server image digest. When set, the rendered image uses repository@digest.
   digest: "sha256:bb3f13615365703315a43b9059f65e71e876440f867e23a42bf27f2fa18264e1"
   # -- Kubernetes image pull policy.
   pullPolicy: IfNotPresent
