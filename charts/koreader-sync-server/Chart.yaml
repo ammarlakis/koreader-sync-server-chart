@@ -3,10 +3,11 @@ name: koreader-sync-server
 description: Helm chart for deploying the KOReader sync server
 type: application
 version: 0.1.0
+# renovate: image=koreader/kosync
 appVersion: "v2.1.1"
 home: https://github.com/ammarlakis/koreader-sync-server-chart
 maintainers:
-  - name: Ammar Lakis
+  - name: ammarlakis
     url: https://github.com/ammarlakis
 sources:
   - https://github.com/koreader/koreader-sync-server
