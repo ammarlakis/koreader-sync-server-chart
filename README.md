@@ -17,16 +17,6 @@ helm lint charts/koreader-sync-server
 helm template koreader-sync-server charts/koreader-sync-server
 ```
 
-## Release
-
-Release automation follows the chart release flow used by the sibling chart repositories:
-
-```bash
-just release
-```
-
-The release script bumps `charts/koreader-sync-server/Chart.yaml`, regenerates chart documentation, prepends `CHANGELOG.md`, commits, tags, and pushes. The GitHub Actions release workflow packages the chart, creates a GitHub release asset, and dispatches the shared Helm registry update workflow.
-
 ## License
 
 This project is licensed under the MIT License.

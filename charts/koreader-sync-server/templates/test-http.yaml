@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ printf "%s-test-http" (include "koreader-sync-server.fullname" . | trunc 53 | trimSuffix "-") }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  restartPolicy: Never
+  activeDeadlineSeconds: 60
+  automountServiceAccountToken: false
+  containers:
+    - name: http
+      image: curlimages/curl:8.14.1
+      command: ["sh", "-ec"]
+      args:
+        - |
+          curl -fsS --max-time 10 -H 'Accept: application/vnd.koreader.v1+json' "$HTTP_URL" -o /tmp/http.json
+          grep -Eq '"state"[[:space:]]*:[[:space:]]*"OK"' /tmp/http.json
+          curl -kfsS --max-time 10 -H 'Accept: application/vnd.koreader.v1+json' "$HTTPS_URL" -o /tmp/https.json
+          grep -Eq '"state"[[:space:]]*:[[:space:]]*"OK"' /tmp/https.json
+      env:
+        - name: HTTP_URL
+          value: {{ printf "http://%s:%v/healthcheck" (include "koreader-sync-server.fullname" .) .Values.service.httpPort | quote }}
+        - name: HTTPS_URL
+          value: {{ printf "https://%s:%v/healthcheck" (include "koreader-sync-server.fullname" .) .Values.service.httpsPort | quote }}

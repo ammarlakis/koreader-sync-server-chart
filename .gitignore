@@ -2,3 +2,5 @@
 *.bak
 *.tgz
 dist/
+/.cocoindex_code/
+/release-notes.md
